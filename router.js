@@ -4,6 +4,10 @@ riot.tag('router',
   '<yield/>',
   function (opts) {
 
+    const refreshRoutes = () => {
+      this.tags.route.map(route => route.update())
+    }
+
     const renderRoutes = e => {
       e = e ||  window.event
       var element = e.target || e.srcElement
@@ -11,7 +15,7 @@ riot.tag('router',
       if (element.tagName == 'A') {
         if (element.href.startsWith(document.baseURI)) {
           window.history.pushState({},"", element.href)
-          this.tags.route.map(route => route.update())
+          refreshRoutes()
           e.preventDefault()
         }
       }
@@ -19,6 +23,7 @@ riot.tag('router',
 
     this.on('mount', function() {
       document.addEventListener('click', renderRoutes)
+      window.addEventListener('popstate', refreshRoutes)
 
       const rootPaths = document.baseURI.split('/').slice(3).length
       const paths = window.location.pathname.split('/').slice(rootPaths)
@@ -26,13 +31,14 @@ riot.tag('router',
       window.location.__defineSetter__('route', newValue => {
         if (!newValue) return;
         window.history.pushState({},"", newValue)
-        this.tags.route.map(route => route.update())
+        refreshRoutes()
       })
 
     })
 
     this.on('unmount', function() {
       document.removeEventListener('click', renderRoutes)
+      window.removeEventListener('popstate', refreshRoutes)
 
       window.location.route = undefined
     })
