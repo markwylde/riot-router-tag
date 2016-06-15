@@ -2,7 +2,7 @@
 Build routes in riot using simple tags
 
 ## Demo
-For a demo see my other project [riot-redux-boilerplate](https://github.com/markwylde/riot-redux-boilerplate)
+For a demo see my other project [riot-redux-router-boilerplate](https://github.com/markwylde/riot-redux-router-boilerplate) which is based on [JSPM](http://jspm.io/)
 
 ## Example
 ```html
