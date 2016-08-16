@@ -72,7 +72,8 @@ riot.tag('route',
         }, true)
       }
 
-      this.update({ isActivePath, route: routeOpts })
+      this.isActivePath = isActivePath
+      this.route = routeOpts
     }
 
     this.on('update', render)
